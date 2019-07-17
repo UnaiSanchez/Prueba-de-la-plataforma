@@ -58,7 +58,7 @@
         event.preventDefault()
         console.log('Formulario evitado')
         const deviceId = document.querySelector('#device_id').value
-        fetch('http://localhost:3001/device?id='+ deviceId)
+        fetch('https://plataformaiot1.herokuapp.com/device?id='+ deviceId)
             .then(function(response){
                 return response.json()
             })
