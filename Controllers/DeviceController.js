@@ -19,3 +19,19 @@ module.exports.createDevice = function(req,res){
         }
     })
 }
+module.exports.getDevices = function(req,res){
+    DeviceModel.find({}).then(function(devices){
+        res.json(devices)
+    })
+}
+
+module.exports.getDeviceById = function(req,res){
+    const deviceId= req.query.id
+    DeviceModel.findById(deviceId).then(function(device){
+        if(device) {
+            res.json(device)
+        }else{
+            res.status(400).send('no existe')
+        }
+    })
+}
