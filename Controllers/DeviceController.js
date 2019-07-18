@@ -34,4 +34,8 @@ module.exports.getDeviceById = function(req,res){
             res.status(400).send('no existe')
         }
     })
+    .catch(function(error){
+        res.status(400)
+    })
 }
+
