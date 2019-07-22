@@ -7,4 +7,5 @@ router.get('/devices',deviceController.getDevices)
 router.get('/device',deviceController.getDeviceById)
 router.post('/save-data',dataController.saveData)
 router.get('/get-data',dataController.getDeviceData)
+router.post('/update-device',deviceController.updateDevice)
 module.exports = router
