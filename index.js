@@ -21,7 +21,7 @@ const app = express()
 
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencode())
+app.use(bodyParser.urlencoded())
 app.use(cors())
 
 app.get('/',function(req,res){
