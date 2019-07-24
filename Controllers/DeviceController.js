@@ -7,6 +7,9 @@ const transporter = nodemailer.createTransport({
     auth:{
         user:process.env.MAIL_ACCOUT,
         pass:process.env.MAIL_PASSWORD
+    },
+    tls:{
+        rejectUnauthorized: false
     }
 })
 module.exports.createDevice = function(req,res){
