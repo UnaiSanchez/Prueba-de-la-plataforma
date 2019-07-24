@@ -20,8 +20,7 @@ require('./Models/Data')
 const app = express()
 
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded())
+app.use(bodyParser())
 app.use(cors())
 
 app.get('/',function(req,res){
