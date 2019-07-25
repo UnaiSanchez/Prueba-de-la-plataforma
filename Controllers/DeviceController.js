@@ -1,17 +1,10 @@
 const mongoose = require('mongoose')
 const DeviceModel = mongoose.model('Device')
-const nodemailer = require('nodemailer')
+const sgMail = require('@sendgrid/mail')
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 require('dotenv').config({path: '../variables.env'})
-const transporter = nodemailer.createTransport({
-    service:'gmail',
-    auth:{
-        user:process.env.MAIL_ACCOUT,
-        pass:process.env.MAIL_PASSWORD
-    },
-    tls:{
-        rejectUnauthorized: false
-    }
-})
+
 module.exports.createDevice = function(req,res){
     const name = req.body.name
     const type = req.body.type
@@ -67,20 +60,18 @@ module.exports.sendEmail = function(req,res){
     const deviceId = req.body.deviceId
     const date = new Date()
     const dateFormatted = date.toISOString()
-    console.log(deviceId)
-    const mailOptions={
-        from: process.env.MAIL_ACCOUT,
-        to:'unai.san.rod@techtalents.club',
-        subject: dateFormatted + '|| ¡¡Un aviso en nombre de tu dispositivo :' + deviceId + ' !!',
-        html:`<p>El dispositivo con ID:${deviceId} te ha enviado una alerta a ${dateFormatted} </p>`
+    const msg={
+        
+        to:'unai.sanchez.3@gmail.com',
+        from: 'unai.san.rod@techtalents.club',
+        subject: `A ${dateFormatted} se ha detectado algo desde ${deviceId}`,
+        text: `Se ha detectado algo desde ${deviceId}`,
+        html:`<h1>Se ha detectado algo desde ${deviceId}<h1>`
     }
-    transporter.sendMail(mailOptions, function(err,info){
-        if(err){
-            console.log(err)
-            res.status(400).json(err)
-        }else{
-            console.log(info)
-            res.status(200).json(info)
+    sgMail.send(msg).then(function(message){
+        console.log(message)
+        if(message){
+            res.status(200).send('email enviado')
         }
     })
 }
